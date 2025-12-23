@@ -60,12 +60,10 @@ def authorise(view_tokens: bool = False) -> dict:
     return token_response
 
 
-def get_athlete(refresh_token: str, view_tokens: bool = False) -> Client:
+def get_athlete(client_id: str, client_secret: str, refresh_token: str, view_tokens: bool = False) -> Client:
     """Refreshes an access token using a refresh token and returns an authorised Strava client."""
 
     client = Client()
-
-    client_id, client_secret = os.getenv("CLIENT_ID"), os.getenv("CLIENT_SECRET")
 
     # exchange refresh token for a new short lived access token:
     token_response = client.refresh_access_token(
@@ -99,8 +97,12 @@ def main() -> None:
     # token_response = authorise(view_tokens=True)
 
     # refresh an access token, authenticate the athlete, and return an authorised client.
-    refresh_token = os.getenv("REFRESH_TOKEN1")
-    client = get_athlete(refresh_token, view_tokens=True)
+    client = get_athlete(
+        client_id=os.getenv("CLIENT_ID"),
+        client_secret=os.getenv("CLIENT_SECRET"), 
+        refresh_token=os.getenv("REFRESH_TOKEN1"),
+        view_tokens=True
+    )
     
 
 if __name__ == "__main__":
