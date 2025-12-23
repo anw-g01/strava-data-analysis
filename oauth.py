@@ -44,7 +44,7 @@ def _get_tokens(client_id: str, client_secret: str, view_tokens: bool = False) -
 
 def _print_tokens(token_response: dict) -> None:
     print(f"\noutputting access and refresh tokens (DO NOT SHARE OR COMMIT):")
-    print(f"{json.dumps(token_response, indent=4)}\n")
+    print(f"{json.dumps(token_response, indent=4)}")
 
 
 def authorise(view_tokens: bool = False) -> dict:
@@ -60,7 +60,13 @@ def authorise(view_tokens: bool = False) -> dict:
     return token_response
 
 
-def get_athlete(client_id: str, client_secret: str, refresh_token: str, view_tokens: bool = False) -> Client:
+def get_athlete(
+    client_id: str, 
+    client_secret: str, 
+    refresh_token: str, 
+    view_tokens: bool = False,
+    verbose: bool = True
+) -> Client:
     """Refreshes an access token using a refresh token and returns an authorised Strava client."""
 
     client = Client()
@@ -83,8 +89,9 @@ def get_athlete(client_id: str, client_secret: str, refresh_token: str, view_tok
     print(f"\nSuccessfully authenticated athlete: {athlete.firstname} {athlete.lastname}")
 
     # print profile details
-    profile_details = json.dumps(athlete.__dict__, indent=4, default=str)
-    print(f"\n{profile_details}")
+    if verbose:
+        profile_details = json.dumps(athlete.__dict__, indent=4, default=str)
+        print(f"\n{profile_details}")
 
     return client
 
@@ -96,12 +103,13 @@ def main() -> None:
     # run once to complete OAuth authorisation:
     # token_response = authorise(view_tokens=True)
 
-    # refresh an access token, authenticate the athlete, and return an authorised client.
+    # refresh an access token, authenticate the athlete, and return an authorised client:
     client = get_athlete(
         client_id=os.getenv("CLIENT_ID"),
         client_secret=os.getenv("CLIENT_SECRET"), 
         refresh_token=os.getenv("REFRESH_TOKEN1"),
-        view_tokens=True
+        view_tokens=True,
+        verbose=False
     )
     
 
