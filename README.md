@@ -1,1 +1,3 @@
-# Strava Athlete Data Analysis
+# Strava Athlete - Data Analysis & Visualisation
+
+Work in progress...

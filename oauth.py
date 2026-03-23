@@ -86,7 +86,7 @@ def get_athlete(
 
     # fetch athlete profile to verify successful authorisation:
     athlete = client.get_athlete()
-    print(f"\nSuccessfully authenticated athlete: {athlete.firstname} {athlete.lastname}")
+    print(f"\nsuccessfully authenticated athlete: {athlete.firstname} {athlete.lastname}")
 
     # print profile details
     if verbose:
