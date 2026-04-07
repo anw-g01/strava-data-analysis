@@ -11,7 +11,7 @@ import os
 def extract(client: Client, detailled: bool = False) -> list[dict]:
     """Uses the globally authenticated CLIENT object to extract athlete data."""
 
-    # extract all activities (public + private):
+    # extract all activities (public + private)
     activities = client.get_activities(limit=None)
     print(f"\nextracting and storing all activites...\n")
 
@@ -21,12 +21,11 @@ def extract(client: Client, detailled: bool = False) -> list[dict]:
         print(f"\rno. of activities extracted: {i}", end="")
 
         rec = {
-            # general activity metrics:
+            # general activity metrics
             "activity_id": a.id,
             "name": a.name,
             "type": a.type,
             "date": a.start_date.date(),                                # UTC date
-            "start_time": a.start_date.time(),                          # UTC time only
             "start_date_local": getattr(a, "start_date_local", None),
             # "timezone": getattr(a, "timezone", None),
             "distance_km": a.distance / 1000,                           # m
@@ -42,7 +41,7 @@ def extract(client: Client, detailled: bool = False) -> list[dict]:
             "num_achievements": getattr(a, "achievement_count", None),
             "num_kudos": getattr(a, "kudos_count", None),
             "is_manual": getattr(a, "manual", None),    # auto-recorded vs manually entered activities.
-            # running specific metrics:
+            # running specific metrics
             "avg_hr": getattr(a, "average_heartrate", None),            # bpm
             "max_hr": getattr(a, "max_heartrate", None),                # bpm
             "avg_cadence_spm": getattr(a, "average_cadence", None),     # spm (strides per minute)
@@ -51,7 +50,7 @@ def extract(client: Client, detailled: bool = False) -> list[dict]:
         }
 
         if detailled:
-            # extra detailled metrics:
+            # extra detailled metrics
             d = client.get_activity(a.id)
             rec["description"] = getattr(d, "description", None)  # activity description
             rec["calories"] = getattr(d, "calories", None)
@@ -59,7 +58,7 @@ def extract(client: Client, detailled: bool = False) -> list[dict]:
 
         records.append(rec)
 
-    # get statistics on no. of total public activities:
+    # get statistics on no. of total public activities
     athlete = client.get_athlete()
     stats = client.get_athlete_stats(athlete.id)
     runs, rides, swims = stats.all_run_totals, stats.all_ride_totals, stats.all_swim_totals
@@ -71,66 +70,100 @@ def extract(client: Client, detailled: bool = False) -> list[dict]:
 
 
 def transform(df: pd.DataFrame, client: Client) -> pd.DataFrame:
-
-    # ------------ UNIT CONVERSIONS ------------ #
+    "Clean, transform, and prepare all activities data."
 
     # speed (m/s to km/h and mph)
-    df["avg_speed_km_h"] = (df["avg_speed_mps"] * 3.6).round(2)     # m/s -> km/h
-    df["max_speed_km_h"] = (df["max_speed_mps"] * 3.6).round(2)
-    df["avg_speed_mph"] = (df["avg_speed_mps"] * 2.23694).round(2)  # m/s -> mph
-    df["max_speed_mph"] = (df["max_speed_mps"] * 2.23694).round(2)
+    df["avg_speed_km_h"] = (df["avg_speed_mps"] * 3.6)      # m/s -> km/h
+    df["max_speed_km_h"] = (df["max_speed_mps"] * 3.6)
+    df["avg_speed_mph"] = (df["avg_speed_mps"] * 2.23694)   # m/s -> mph
+    df["max_speed_mph"] = (df["max_speed_mps"] * 2.23694)
 
     # distance (km to miles)
-    df["distance_miles"] = (df["distance_km"] * 0.621371).round(2)  # km -> miles
+    df["distance_miles"] = (df["distance_km"] * 0.621371)   # km -> miles
 
-    # time (timedelta objects)
-    df["moving_time"] = pd.to_timedelta(df["moving_time_s"], unit="s")      # s -> timedelta
-    df["elapsed_time"] = pd.to_timedelta(df["elapsed_time_s"], unit="s")    # s -> timedelta
+    # useful duration columns
+    df["moving_time_mins"] = df["moving_time_s"] / 60 
+    df["elapsed_time_mins"] = df["elapsed_time_s"] / 60 
 
-    # date (datetime objects)
-    df["date"] = pd.to_datetime(df["date"])                                 # convert dates to datetime for ordering
-    df["start_date_local"] = pd.to_datetime(df["start_date_local"])         # convert to datetime first
-    df["end_time_local"] = df["start_date_local"] + df["elapsed_time"]      # compute end datetime
+    # dates (datetime data types)
+    df["date"] = pd.to_datetime(df["date"])                             # convert dates to datetime for ordering
+    df["start_datetime"] = pd.to_datetime(df["start_date_local"])       # convert to datetime first
+    df["end_datetime"] = df["start_datetime"] + pd.to_timedelta(df["elapsed_time_s"], unit="s")     
 
-    # optional: extract just the time components (LOCAL) - store as strings:
-    df["start_time"] = df["start_date_local"].dt.strftime("%H:%M:%S")  
-    df["end_time"] = df["end_time_local"].dt.strftime("%H:%M:%S")
+    # create date and time-related columns
+    df["month"] = pd.Categorical(
+        df["date"].dt.month_name(),
+        categories=[
+            "January", "February", "March", 
+            "April", "May", "June",
+            "July", "August", "September", 
+            "October", "November", "December"
+        ],
+        ordered=True
+    )
+    df["weekday"] = pd.Categorical(
+        df["date"].dt.day_name(),
+        categories=[
+            "Monday", "Tuesday", "Wednesday", 
+            "Thursday", "Friday", "Saturday", "Sunday"
+        ],
+        ordered=True
+    )
+    df["start_hour"] = df["start_datetime"].dt.hour
 
-    # ------------ FORMATTING + CLEANING ------------ #
+    # categorical columns
+    df["visibility"] = (
+        df["visibility"]
+        .str.replace("_", " ")
+        .str.title()
+        .astype("category")
+    )
+    df["visibility"] = df["visibility"].astype("category")
+    df["is_manual"] = df["is_manual"].astype("category")
 
-    df["visibility"] = df["visibility"].map({
-        "everyone": "Everyone",
-        "followers_only": "Followers Only",
-        "only_me": "Only Me",
-    })
-
-    # map the gear IDs to the shoe name:
+    # map the gear IDs to the shoe name
     athlete = client.get_athlete()
     shoe_mapping = {}
     for gear in athlete.shoes:
         shoe_mapping[gear.id] = gear.name
-    df["shoe_used"] = df["gear_id"].map(shoe_mapping)
+    df["shoe"] = df["gear_id"].map(shoe_mapping).astype("category")
 
-    # clean the activity "type" column, RelaxedActivityType:
-    df["type"] = df["type"].astype(str).str.extract(r"root='([^']+)'")  # any character except ', match 1+
+    # clean the activity "type" column, RelaxedActivityType
+    df["type"] = (
+        df["type"]
+        .astype(str)
+        .str.extract(r"root='([^']+)'")  # any character except ', match 1+
+        .astype("category")
+    )
 
-    # average running cadence (only runs are doubled as it's per foot initially):
+    # average running cadence (only runs are doubled as it's per foot initially)
     df.loc[df["type"] == "Run", "avg_cadence_spm"] *= 2
 
-    # ------ DERIVED METRICS ------ #
+    # calculate paces (min/km and min/mile) from speeds (km/h and mph)
+    pace_mappings = {
+        "avg_speed_km_h": "avg_pace_km",
+        "max_speed_km_h": "max_pace_km",
+        "avg_speed_mph": "avg_pace_mile",
+        "max_speed_mph": "max_pace_mile",
+    }
 
-    # pace (as time deltas):
-    for speed_col, pace_col in zip(
-        ["avg_speed_km_h", "max_speed_km_h", "avg_speed_mph", "max_speed_mph"],
-        ["avg_pace_km", "max_pace_km", "avg_pace_mile", "max_pace_mile"]
-    ):
-        # mask zeros to avoid zero-division errors:
+    for speed_col, pace_col in pace_mappings.items():
+
+        # mask zeros as NaN to avoid zero-division errors
         df.loc[df[speed_col] <= 0, speed_col] = np.nan
 
-        # create new pace column (converts to min/km and min/mile):
-        df[pace_col] = pd.to_timedelta(1 / df[speed_col] * 60, unit="min", errors="coerce")
+        # create new pace column (convert to min/km or min/mile)
+        df[pace_col] = 1 / df[speed_col] * 60
 
-    return df.round(2)  # all numerics to 2 d.p.
+    # drop unwanted columns
+    df = df.drop(
+        columns=[
+            "start_date_local",
+            "gear_id"
+        ]
+    )
+
+    return df
 
 
 def _merge_additional_data(df: pd.DataFrame, filename: str) -> pd.DataFrame:
@@ -215,7 +248,7 @@ def describe_matrix(df: pd.DataFrame) -> pd.DataFrame:
             )
         )
 
-    # average running pace:
+    # average running pace
     for speed_col, pace_col, unit in zip(
         ["avg_speed_km_h", "max_speed_km_h", "avg_speed_mph", "max_speed_mph"],
         ["avg_pace_km", "max_pace_km", "avg_pace_mile", "max_pace_mile"],
@@ -239,7 +272,7 @@ def describe_matrix(df: pd.DataFrame) -> pd.DataFrame:
     # cadence - add units
     df["avg_cadence_spm"] = df["avg_cadence_spm"].apply(lambda x: f"{x:.0f} spm")
 
-    # speeds - add km and miles units:
+    # speeds - add km and miles units
     for mile_col, km_col, unit in zip(
         ["avg_speed_mph", "avg_speed_km_h"],
         ["max_speed_mph", "max_speed_km_h"],
@@ -259,7 +292,7 @@ def describe_matrix(df: pd.DataFrame) -> pd.DataFrame:
     ):
         df[dist_col] = df[dist_col].apply(lambda x: f"{x:.1f} {unit}")
 
-    # ordering of columns to include:
+    # ordering of columns to include
     columns = [
         "distance_km", "distance_miles",
         "moving_time", "elapsed_time",
@@ -271,7 +304,7 @@ def describe_matrix(df: pd.DataFrame) -> pd.DataFrame:
         "num_comments", "num_achievements",  "num_kudos",
         "avg_speed_mph", "avg_speed_km_h",
         # "max_speed_mph", "max_speed_km_h",
-        # columns not included from API:
+        # columns not included from API
         # "num_photos",
         # "relative_effort",
         # "max_grade",
@@ -286,9 +319,9 @@ def describe_matrix(df: pd.DataFrame) -> pd.DataFrame:
         .transpose()
         .reset_index(names="metric")
         .drop("count", axis=1)
-        # drop percentiles:
+        # drop percentiles
         .drop(columns=["25%", "50%", "75%"], axis=1)
-        # re-order columns:
+        # re-order columns
         .loc[:, ["metric", "mean", "min", "max", "std"]]
     )
 
