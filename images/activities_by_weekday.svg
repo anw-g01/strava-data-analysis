@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-04-07T17:03:27.051256</dc:date>
+    <dc:date>2026-04-07T17:24:12.717243</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -40,12 +40,12 @@ z
    <g id="patch_3">
     <path d="M 515.768554 173.334168 
 Q 558.346629 232.441124 549.872921 303.74117 
-" clip-path="url(#pcae6d7a7f8)" style="fill: none; stroke: #000000; stroke-width: 0.6; stroke-linecap: round"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: none; stroke: #000000; stroke-width: 0.6; stroke-linecap: round"/>
     <path d="M 552.368433 297.995526 
 L 549.872921 303.74117 
 L 548.793591 297.570671 
 z
-" clip-path="url(#pcae6d7a7f8)" style="stroke: #000000; stroke-width: 0.6; stroke-linecap: round"/>
+" clip-path="url(#p4cbf479e2e)" style="stroke: #000000; stroke-width: 0.6; stroke-linecap: round"/>
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
@@ -770,7 +770,7 @@ z
      <g id="line2d_8">
       <path d="M 33.429063 470.24 
 L 703.029063 470.24 
-" clip-path="url(#pcae6d7a7f8)" style="fill: none; stroke: #d3d3d3; stroke-width: 0.5; stroke-linecap: square"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: none; stroke: #d3d3d3; stroke-width: 0.5; stroke-linecap: square"/>
      </g>
      <g id="line2d_9"/>
      <g id="text_8">
@@ -815,7 +815,7 @@ z
      <g id="line2d_10">
       <path d="M 33.429063 351.778462 
 L 703.029063 351.778462 
-" clip-path="url(#pcae6d7a7f8)" style="fill: none; stroke: #d3d3d3; stroke-width: 0.5; stroke-linecap: square"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: none; stroke: #d3d3d3; stroke-width: 0.5; stroke-linecap: square"/>
      </g>
      <g id="line2d_11"/>
      <g id="text_9">
@@ -869,7 +869,7 @@ z
      <g id="line2d_12">
       <path d="M 33.429063 233.316923 
 L 703.029063 233.316923 
-" clip-path="url(#pcae6d7a7f8)" style="fill: none; stroke: #d3d3d3; stroke-width: 0.5; stroke-linecap: square"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: none; stroke: #d3d3d3; stroke-width: 0.5; stroke-linecap: square"/>
      </g>
      <g id="line2d_13"/>
      <g id="text_10">
@@ -911,7 +911,7 @@ z
      <g id="line2d_14">
       <path d="M 33.429063 114.855385 
 L 703.029063 114.855385 
-" clip-path="url(#pcae6d7a7f8)" style="fill: none; stroke: #d3d3d3; stroke-width: 0.5; stroke-linecap: square"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: none; stroke: #d3d3d3; stroke-width: 0.5; stroke-linecap: square"/>
      </g>
      <g id="line2d_15"/>
      <g id="text_11">
@@ -930,7 +930,7 @@ L 135.480399 470.24
 L 135.480399 103.009231 
 L 63.865426 103.009231 
 z
-" clip-path="url(#pcae6d7a7f8)" style="fill: #d3d3d3"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: #d3d3d3"/>
    </g>
    <g id="patch_5">
     <path d="M 153.384143 470.24 
@@ -938,7 +938,7 @@ L 224.999116 470.24
 L 224.999116 110.116923 
 L 153.384143 110.116923 
 z
-" clip-path="url(#pcae6d7a7f8)" style="fill: #d3d3d3"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: #d3d3d3"/>
    </g>
    <g id="patch_6">
     <path d="M 242.902859 470.24 
@@ -946,7 +946,7 @@ L 314.517833 470.24
 L 314.517833 195.409231 
 L 242.902859 195.409231 
 z
-" clip-path="url(#pcae6d7a7f8)" style="fill: #d3d3d3"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: #d3d3d3"/>
    </g>
    <g id="patch_7">
     <path d="M 332.421576 470.24 
@@ -954,7 +954,7 @@ L 404.036549 470.24
 L 404.036549 100.64 
 L 332.421576 100.64 
 z
-" clip-path="url(#pcae6d7a7f8)" style="fill: #007d82"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: #007d82"/>
    </g>
    <g id="patch_8">
     <path d="M 421.940292 470.24 
@@ -962,7 +962,7 @@ L 493.555266 470.24
 L 493.555266 254.64 
 L 421.940292 254.64 
 z
-" clip-path="url(#pcae6d7a7f8)" style="fill: #d3d3d3"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: #d3d3d3"/>
    </g>
    <g id="patch_9">
     <path d="M 511.459009 470.24 
@@ -970,7 +970,7 @@ L 583.073982 470.24
 L 583.073982 328.086154 
 L 511.459009 328.086154 
 z
-" clip-path="url(#pcae6d7a7f8)" style="fill: #d3d3d3"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: #d3d3d3"/>
    </g>
    <g id="patch_10">
     <path d="M 600.977726 470.24 
@@ -978,7 +978,7 @@ L 672.592699 470.24
 L 672.592699 159.870769 
 L 600.977726 159.870769 
 z
-" clip-path="url(#pcae6d7a7f8)" style="fill: #d3d3d3"/>
+" clip-path="url(#p4cbf479e2e)" style="fill: #d3d3d3"/>
    </g>
    <g id="text_12">
     <!-- 155 -->
@@ -1481,8 +1481,8 @@ z
      <use xlink:href="#Georgia-73" transform="translate(906.494141 0)"/>
      <use xlink:href="#Georgia-74" transform="translate(949.707031 0)"/>
     </g>
-    <!-- activities on Saturday -->
-    <g transform="translate(454.921981 165.070327) scale(0.1 -0.1)">
+    <!-- activities on Saturdays -->
+    <g transform="translate(452.761044 165.070327) scale(0.1 -0.1)">
      <defs>
       <path id="Georgia-76" d="M 3269 2891 
 Q 3128 2866 3001 2789 
@@ -1584,12 +1584,13 @@ z
      <use xlink:href="#Georgia-64" transform="translate(794.677734 0)"/>
      <use xlink:href="#Georgia-61" transform="translate(852.099609 0)"/>
      <use xlink:href="#Georgia-79" transform="translate(902.490234 0)"/>
+     <use xlink:href="#Georgia-73" transform="translate(951.708984 0)"/>
     </g>
    </g>
    <g id="AnnotationBbox_1">
     <g id="text_20">
      <!-- Your Most Active Day of The Week:  -->
-     <g transform="translate(33.429063 25.215312) scale(0.18 -0.18)">
+     <g transform="translate(33.429063 26.728125) scale(0.2 -0.2)">
       <defs>
        <path id="Georgia-41" d="M 4441 0 
 L 2594 0 
@@ -1810,7 +1811,7 @@ z
     </g>
     <g id="text_21">
      <!-- Thursday -->
-     <g style="fill: #007d82" transform="translate(319.606562 25.215312) scale(0.18 -0.18)">
+     <g style="fill: #007d82" transform="translate(351.404063 26.728125) scale(0.2 -0.2)">
       <defs>
        <path id="Georgia-Bold-54" d="M 4338 3166 
 L 4097 3166 
@@ -2176,7 +2177,7 @@ z
   </g>
   <g id="text_22">
    <!-- Total number of recorded Strava activities by day of the week -->
-   <g style="fill: #6e6e6e" transform="translate(33.429063 52.7264) scale(0.12 -0.12)">
+   <g style="fill: #6e6e6e" transform="translate(33.429063 50.156) scale(0.12 -0.12)">
     <defs>
      <path id="Georgia-6d" d="M 5503 0 
 L 4000 0 
@@ -2399,7 +2400,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="pcae6d7a7f8">
+  <clipPath id="p4cbf479e2e">
    <rect x="33.429063" y="82.16" width="669.6" height="388.08"/>
   </clipPath>
  </defs>

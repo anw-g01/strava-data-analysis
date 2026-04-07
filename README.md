@@ -6,6 +6,12 @@
     width="100%">
 </a>
 
+<a href="./notebooks/activities_by_month.ipynb">
+  <img src="./images/activities_by_month.svg"
+    alt="activities by month"
+    width="100%">
+</a>
+
 <a href="./notebooks/activities_by_weekday.ipynb">
   <img src="./images/activities_by_weekday.svg"
     alt="activities by weekday"
