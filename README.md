@@ -5,3 +5,9 @@
     alt="activity start time kde"
     width="100%">
 </a>
+
+<a href="./notebooks/activities_by_weekday.ipynb">
+  <img src="./images/activities_by_weekday.svg"
+    alt="activities by weekday"
+    width="100%">
+</a>
