@@ -91,6 +91,8 @@ def transform(df: pd.DataFrame, client: Client) -> pd.DataFrame:
     df["end_datetime"] = df["start_datetime"] + pd.to_timedelta(df["elapsed_time_s"], unit="s")     
 
     # create date and time-related columns
+    df["year"] = df["date"].dt.year
+    df["week"] = df["date"].dt.isocalendar().week    # week number of the year (1-53)
     df["month"] = pd.Categorical(
         df["date"].dt.month_name(),
         categories=[
@@ -347,6 +349,37 @@ def main() -> None:
 
     print(f"\ndisplaying describe matrix:\n")
     print(desc)
+
+
+def _temp() -> None:
+
+    load_dotenv()   # parses environment variables from .env file
+    
+    client1 = get_athlete(
+        client_id=os.getenv("CLIENT_ID"),
+        client_secret=os.getenv("CLIENT_SECRET"), 
+        refresh_token=os.getenv("REFRESH_TOKEN1"),
+        view_tokens=False,
+        verbose=False
+    )
+
+    client2 = get_athlete(
+        client_id=os.getenv("CLIENT_ID"),
+        client_secret=os.getenv("CLIENT_SECRET"), 
+        refresh_token=os.getenv("REFRESH_TOKEN2"),
+        view_tokens=False,
+        verbose=False
+    )
+
+    export(client1, filename="data/df1.parquet")
+    export(client2, filename="data/df2.parquet")
+
+    df1 = pd.read_parquet("data/df1.parquet")
+    df2 = pd.read_parquet("data/df2.parquet")
+
+    df = pd.concat([df1, df2], ignore_index=True)
+    df.to_parquet("data/strava_activities.parquet", index=False)
+    df.info()
 
 
 if __name__ == "__main__":
