@@ -23,3 +23,9 @@
     alt="activities by weekday"
     width="100%">
 </a>
+
+<a href="./notebooks/running_distance_distribution.ipynb">
+  <img src="./images/running_distance_distribution.svg"
+    alt="running distance distribution"
+    width="100%">
+</a>
