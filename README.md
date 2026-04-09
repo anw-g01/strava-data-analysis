@@ -29,3 +29,9 @@
     alt="running distance distribution"
     width="100%">
 </a>
+
+<a href="./notebooks/elapsed_time_distribution.ipynb">
+  <img src="./images/elapsed_time_distribution.svg"
+    alt="elapsed time distribution"
+    width="100%">
+</a>
