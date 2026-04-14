@@ -1,4 +1,4 @@
-# Strava Athlete - Data Analysis & Visualisation
+# Strava Data Analysis & Visualisation
 
 <a href="./notebooks/avg_pace_vs_heart_rate.ipynb">
   <img src="./images/avg_pace_vs_heart_rate.svg"
