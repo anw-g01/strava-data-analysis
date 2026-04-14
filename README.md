@@ -1,5 +1,11 @@
 # Strava Athlete - Data Analysis & Visualisation
 
+<a href="./notebooks/avg_pace_vs_heart_rate.ipynb">
+  <img src="./images/avg_pace_vs_heart_rate.svg"
+    alt="avg pace vs heart rate"
+    width="100%">
+</a>
+
 <a href="./notebooks/weekly_running_distance.ipynb">
   <img src="./images/weekly_running_distance.svg"
     alt="weekly running distance"
