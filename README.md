@@ -12,6 +12,12 @@
     width="100%">
 </a>
 
+<a href="./notebooks/activities_by_type.ipynb">
+  <img src="./images/activities_by_type.svg"
+    alt="activities by type"
+    width="100%">
+</a>
+
 <a href="./notebooks/activity_start_time_kde.ipynb">
   <img src="./images/activity_start_time_kde.svg"
     alt="activity start time kde"
